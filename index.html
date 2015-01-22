@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
 
-    <title>Non Linear History in Git</title>
+    <title>Non Linear Version Control</title>
 
     <meta name="description" content="Why and How to bring the power of non-linear history to your project">
     <meta name="author" content="Daniel Collins">
@@ -44,7 +44,7 @@
       <div class="slides">
         <section>
           <section>
-          <h1> Non Linear History</h1>
+          <h1>Non Linear Version Control</h1>
           </section>
           <section>
             <ul>
@@ -56,7 +56,8 @@
           <section>
             <ul>
               <li>Stores full objects, not diffs</li>
-              <li>The cli interface is bad: inconsistent and confusing</li>
+              <li>Everyone has a copy of the repo</li>
+              <li>The cli commands are bad: inconsistent and confusing</li>
               <li>Most concepts have weird names</li>
               <li>Get over it for the POWER</li>
             </ul>
@@ -64,7 +65,7 @@
         </section>
 
         <section>
-          <h1> Non Linear History</h1>
+          <h1>Non Linear Version Control</h1>
         </section>
 
         <section data-background="images/gitflow-diagram.png" data-background-size="820px">
@@ -110,7 +111,7 @@
               <li><code>feature/my-fancy-feature</code></li>
             </ul>
           </section>
-          <section data-markdown>
+          <section>
             <ul>
               <li>In Git, a branch is just a "pointer with memory"</li>
               <li>Points to a commit and follows along as new commits are made</li>
@@ -125,7 +126,7 @@
           <br><br>
           <ul>
             <li>Always builds, always works, all tests pass</li>
-            <li>Avoid commits directly to master</li>
+            <li>Almost never commit directly to master</li>
             <li>Controlled by the release manager</li>
           </ul>
         </section>
@@ -177,6 +178,8 @@ git push
         <section>
           <h2>Demo Time</h2>
         </section>
+        <section data-background="images/gitflow-diagram.png" data-background-size="820px">
+        </section>
         <section>
           <h2>You Forgot</h2>
           <ul>
@@ -197,7 +200,7 @@ commit -m 'bump version'
 # run final tests/sanity checks/whatever
 git flow release finish 1.3.0
 # Git flow will walk you through creating the release tag
-# upload the tags, which show up as "releases" in github
+# upload the new tag, which show up as a new "release" in github
 git push --tags
 # upload the master code
 git push
@@ -207,19 +210,21 @@ git push
         <section>
           <h2> Panicing Workflow </h2>
           <pre><code data-trim class="sh">
-git checkout master
-# Uh, Oh.  Production is broken!
-git flow hotfix start 1.3.1
-# Debug desparately.
+# Checkout the version in production
+git checkout tags/1.2.0
+# Start a hotfix branch to work on the fix
+git flow hotfix start 1.2.1
+# Debug calmly and methodically
 commit -m 'forgot to +1 for a null terminator'
 # Write a regression test
 commit -m 'added regression test'
 # run final tests/sanity checks/whatever
 commit -m 'cleanup documentation typo'
 # let's get that change out
-git flow hotfix finish 1.3.1
+git flow hotfix finish 1.2.1
 # Git flow will walk you through creating the new release tag
 # changes merged back into master AND develop
+git push
 cowsay "going back to sleep, it's 3am"
           </code><pre>
         </section>
